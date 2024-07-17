@@ -15,7 +15,7 @@ FROM openjdk:21-jdk-slim
 
 
 # Copy the jar file from the build stage
-COPY --from=build /target/webapp-1.0-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/webapp-1.0-SNAPSHOT.jar app.jar
 
 # Expose the application port
 EXPOSE 8081
