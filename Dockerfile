@@ -1,5 +1,5 @@
 # Use Maven image to build the application
-FROM maven:3.9.6-alpine AS build
+FROM maven AS build
 
 # Set the working directory
 WORKDIR /app
