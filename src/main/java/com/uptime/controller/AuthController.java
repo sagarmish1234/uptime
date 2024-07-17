@@ -74,7 +74,7 @@ public class AuthController {
     @GetMapping("/verify")
     public RedirectView verifyUser(@RequestParam String token){
         verificationTokenService.completeSignup(token);
-        return new RedirectView("https://www.google.com/");
+        return new RedirectView("/");
     }
 
     @PostMapping("/signup")
