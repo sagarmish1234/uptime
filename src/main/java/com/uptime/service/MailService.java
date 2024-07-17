@@ -29,9 +29,11 @@ public class MailService {
     @Value("${spring.mail.username}")
     private String from;
 
-    @Value("${server.port}")
-    private String port;
+//    @Value("${server.port}")
+//    private String port;
 
+    @Value("PUBLIC_URL")
+    private String url;
 
 
     private final JavaMailSender javaMailSender;
@@ -64,7 +66,7 @@ public class MailService {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<>();
         model.put("user", user);
-        model.put("verificationUrl",String.format("http://%s:%s/api/v1/verify?token=%s", InetAddress.getLoopbackAddress().getHostName(),port,token));
+        model.put("verificationUrl",String.format(url+"/api/v1/verify?token=%s", token));
         configuration.getTemplate("uptime-signin.ftlh").process(model, stringWriter);
         return stringWriter.getBuffer().toString();
     }
