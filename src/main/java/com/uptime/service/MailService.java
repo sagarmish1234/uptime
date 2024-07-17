@@ -32,7 +32,7 @@ public class MailService {
 //    @Value("${server.port}")
 //    private String port;
 
-    @Value("PUBLIC_URL")
+    @Value("${PUBLIC_URL}")
     private String url;
 
 
