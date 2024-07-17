@@ -96,7 +96,6 @@ public class MailService {
         model.put("user",activity.getMonitor().getUserInfo());
         model.put("status",activity.getStatus());
         model.put("lastChecked",activity.getDateTime().toString());
-//        model.put("verificationUrl",String.format("http://%s:%s/api/v1/verify?token=%s", InetAddress.getLoopbackAddress().getHostName(),port,token));
         configuration.getTemplate("uptime-alert.ftlh").process(model, stringWriter);
         return stringWriter.getBuffer().toString();
     }

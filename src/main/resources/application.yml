@@ -6,9 +6,9 @@ spring:
     mode: EMBEDDED
   mail:
     properties:
-      mail.smtp.connecttimeout: 5000
-      mail.smtp.timeout: 3000
-      mail.smtp.writetimeout: 5000
+      mail.smtp.connecttimeout: 60000
+      mail.smtp.timeout: 30000
+      mail.smtp.writetimeout: 50000
       mail.store.protocol: pop3
       mail.smtp.starttls.enable: true
       mail.smtp.auth: true
