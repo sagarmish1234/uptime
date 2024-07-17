@@ -11,7 +11,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Use OpenJDK 21 image to run the application
-FROM openjdk:21-jre-slim
+FROM openjdk:21-jdk-slim
 
 
 # Copy the jar file from the build stage
