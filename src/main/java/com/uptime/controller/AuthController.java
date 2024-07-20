@@ -10,8 +10,11 @@ import com.uptime.service.UserDetailsServiceImpl;
 import com.uptime.service.VerificationTokenService;
 import com.uptime.util.JwtUtil;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.net.UnknownHostException;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -42,11 +48,18 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public JwtResponse signIn(@RequestBody AuthRequest authRequest) {
+  public JwtResponse signIn(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
     try {
       Authentication authentication = authenticationManager
           .authenticate(new UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password()));
-      return new JwtResponse(JwtUtil.GenerateToken(authRequest.email()));
+      String accessToken = JwtUtil.GenerateToken(authRequest.email());
+      ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
+              .httpOnly(true)
+              .secure(false)
+              .maxAge(Duration.of(1, ChronoUnit.HOURS))
+              .build();
+      response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+      return new JwtResponse(accessToken);
     } catch (DisabledException disabledException) {
       log.debug("User is not verified");
       throw new UserNotVerified();

@@ -3,33 +3,19 @@ import Image from "../../assets/login-page.jpg"
 import styles from "./login.module.css"
 import { Link } from "react-router-dom";
 import { z } from 'zod'
+import { toFormikValidationSchema } from "zod-formik-adapter";
 const Login = () => {
 
     const loginSchema = z.object({
-        email: z.string().min(1, "Email is required").email("Invalid email address"),
-        password: z.string().min(1, "Password is required").min(8, "Length should be at least 8 characters"),
+        email: z.string({ message: "Email is required" }).email("Invalid email address"),
+        password: z.string({ message: "Password is required" }).min(8, "Length should be at least 8 characters"),
     })
 
     return (
         <div className="h-screen pt-14">
             <Formik
                 initialValues={{ email: '', password: '', showPassword: "false" }}
-                validate={values => {
-                    const errors = {};
-                    if (!values.email) {
-                        errors.email = 'Required';
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                    ) {
-                        errors.email = 'Invalid email address';
-                    }
-                    if (!values.password) {
-                        errors.password = 'Required';
-                    } else if (values.password.length < 8) {
-                        errors.password = 'Length should be at least 8 characters';
-                    }
-                    return errors;
-                }}
+                validationSchema={toFormikValidationSchema(loginSchema)}
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
