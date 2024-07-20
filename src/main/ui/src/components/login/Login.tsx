@@ -4,6 +4,8 @@ import styles from "./login.module.css"
 import { Link } from "react-router-dom";
 import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import axios from "axios";
+import { SERVER_URL } from "../../lib/httpclient";
 const Login = () => {
 
     const loginSchema = z.object({
@@ -14,13 +16,12 @@ const Login = () => {
     return (
         <div className="h-screen pt-14">
             <Formik
-                initialValues={{ email: '', password: '', showPassword: "false" }}
+                initialValues={{ email: '', password: '', showPassword: false }}
                 validationSchema={toFormikValidationSchema(loginSchema)}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
+                onSubmit={async (values, { setSubmitting }) => {
+                    const response = await axios.post(`${SERVER_URL}/api/v1/login`, values)
+                    console.log(response)
+                    setSubmitting(false);
                 }}
             >
                 {({
@@ -84,7 +85,7 @@ const Login = () => {
                                         name="showPassword"
                                         id="showPassword"
                                         onChange={handleChange}
-                                        value={values.showPassword}
+                                        checked={values.showPassword}
                                     />
                                     <label htmlFor="showPassword" className="text-black cursor-pointer">Show Password</label>
                                 </div>

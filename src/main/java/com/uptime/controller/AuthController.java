@@ -30,6 +30,7 @@ import java.time.temporal.TemporalUnit;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin
 @Slf4j
 public class AuthController {
 
