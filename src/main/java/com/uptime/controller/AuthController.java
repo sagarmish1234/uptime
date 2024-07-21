@@ -1,9 +1,6 @@
 package com.uptime.controller;
 
-import com.uptime.dto.AuthRequest;
-import com.uptime.dto.JwtResponse;
-import com.uptime.dto.MessageResponse;
-import com.uptime.dto.SignupRequest;
+import com.uptime.dto.*;
 import com.uptime.exception.UserExistsException;
 import com.uptime.exception.UserNotVerified;
 import com.uptime.service.UserDetailsServiceImpl;
@@ -19,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -54,7 +52,8 @@ public class AuthController {
       Authentication authentication = authenticationManager
           .authenticate(new UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password()));
       String accessToken = JwtUtil.GenerateToken(authRequest.email());
-      return new JwtResponse(accessToken);
+      CustomUserDetails details = (CustomUserDetails)userDetailsService.loadUserByUsername(authRequest.email());
+      return new JwtResponse(accessToken,details.getUserInfo());
     } catch (DisabledException disabledException) {
       throw new UserNotVerified();
     }

@@ -25,6 +25,7 @@ const Login = () => {
                     try {
                         const response = await axios.post(`${SERVER_URL}/api/v1/login`, values)
                         localStorage.setItem("accessToken", response.data.token)
+                        localStorage.setItem("userDetails", JSON.stringify(response.data.userInfo))
                         setSubmitting(false);
                         console.log(response)
                         toast.update(id, { render: "Login success", type: "success", isLoading: false, autoClose: 2000 });
