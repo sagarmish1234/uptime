@@ -2,16 +2,27 @@ import './App.css'
 import Login from './components/login/Login'
 import {
   createBrowserRouter,
-  RouterProvider,
-  Navigate
+  RouterProvider
 } from "react-router-dom";
 import Signup from './components/signup/Signup';
+import Monitors from './components/monitors/Monitors';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import ProtectedRoutes from './components/protectedroute/ProtectedRoutes';
+
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to={"/login"} />
+    element: <ProtectedRoutes />,
+    children: [
+
+      {
+        path: "/monitors",
+        element: <Monitors />
+      }
+    ]
   },
   {
     path: "/login",
@@ -21,6 +32,7 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Signup />
   }
+
 ]);
 
 function App() {
@@ -28,6 +40,8 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer />
+
     </>
   )
 }

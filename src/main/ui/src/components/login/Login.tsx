@@ -1,12 +1,14 @@
 import { Formik } from "formik";
 import Image from "../../assets/login-page.jpg"
 import styles from "./login.module.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import axios from "axios";
 import { SERVER_URL } from "../../lib/httpclient";
+import { toast } from "react-toastify";
 const Login = () => {
+    const navigate = useNavigate();
 
     const loginSchema = z.object({
         email: z.string({ message: "Email is required" }).email("Invalid email address"),
@@ -19,9 +21,21 @@ const Login = () => {
                 initialValues={{ email: '', password: '', showPassword: false }}
                 validationSchema={toFormikValidationSchema(loginSchema)}
                 onSubmit={async (values, { setSubmitting }) => {
-                    const response = await axios.post(`${SERVER_URL}/api/v1/login`, values)
-                    console.log(response)
-                    setSubmitting(false);
+                    const id = toast.loading("Pending login", { closeButton: true, position: "top-center" })
+                    try {
+                        const response = await axios.post(`${SERVER_URL}/api/v1/login`, values)
+                        localStorage.setItem("accessToken", response.data.token)
+                        setSubmitting(false);
+                        console.log(response)
+                        toast.update(id, { render: "Login success", type: "success", isLoading: false, autoClose: 2000 });
+                        navigate("/monitors");
+                    }
+                    catch (e) {
+                        console.log("not authenticated")
+                        if (axios.isAxiosError(e)) {
+                            toast.update(id, { render: e?.response?.data?.message, type: "error", isLoading: false });
+                        }
+                    }
                 }}
             >
                 {({
@@ -97,6 +111,7 @@ const Login = () => {
                     </div>
                 )}
             </Formik>
+
         </div>
     )
 }

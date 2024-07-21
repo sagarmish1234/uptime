@@ -1,11 +1,14 @@
 import { Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import Image from "../../assets/register-page.jpg"
 import styles from "./signup.module.css"
+import axios from 'axios';
+import { SERVER_URL } from '../../lib/httpclient';
+import { toast } from 'react-toastify';
 const Signup = () => {
-
+    const navigate = useNavigate();
     const signupSchema = z.object({
         firstName: z.string({ message: "First name is required" }),
         lastName: z.string({ message: "Last name is required" }),
@@ -22,11 +25,21 @@ const Signup = () => {
             <Formik
                 initialValues={{ email: '', password: '', confirmPassword: "", firstName: "", lastName: "", company: "" }}
                 validationSchema={toFormikValidationSchema(signupSchema)}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
+                onSubmit={async (values, { setSubmitting }) => {
+                    const id = toast.loading("Pending signup", { closeButton: true, position: "top-center" })
+                    try {
+                        const response = await axios.post(`${SERVER_URL}/api/v1/signup`, values)
                         setSubmitting(false);
-                    }, 400);
+                        toast.update(id, { render: "Account created please verify email", type: "success", isLoading: false, autoClose: 2000 });
+                        console.log(response)
+                        navigate("/login");
+                    }
+                    catch (e) {
+                        console.log(e)
+                        if (axios.isAxiosError(e)) {
+                            toast.update(id, { render: e?.response?.data?.message, type: "error", isLoading: false, autoClose: 2000 });
+                        }
+                    }
                 }}
             >
                 {({

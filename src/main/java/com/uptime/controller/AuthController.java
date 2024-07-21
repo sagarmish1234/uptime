@@ -54,19 +54,9 @@ public class AuthController {
       Authentication authentication = authenticationManager
           .authenticate(new UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password()));
       String accessToken = JwtUtil.GenerateToken(authRequest.email());
-      ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
-              .httpOnly(true)
-              .secure(false)
-              .maxAge(Duration.of(1, ChronoUnit.HOURS))
-              .build();
-      response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
       return new JwtResponse(accessToken);
     } catch (DisabledException disabledException) {
-      log.debug("User is not verified");
       throw new UserNotVerified();
-    } catch (Exception exception) {
-      log.debug("Encountered exception ", exception);
-      throw new UsernameNotFoundException("invalid user request..!!");
     }
   }
 
