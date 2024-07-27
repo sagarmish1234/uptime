@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import Image from "../../assets/register-page.jpg"
-import styles from "./signup.module.css"
 import axios from 'axios';
 import { SERVER_URL } from '../../lib/httpclient';
 import { toast } from 'react-toastify';
@@ -23,7 +22,7 @@ const Signup = () => {
     }).refine(data => data.confirmPassword == data.password, { message: "Password do not match", path: ["confirmPassword"] });
 
     return (
-        <div className='h-screen flex place-items-center'>
+        <div className='h-screen flex place-items-center bg-[#07080F]'>
             <Formik
                 initialValues={{ email: '', password: '', confirmPassword: "", firstName: "", lastName: "", company: "" }}
                 validationSchema={toFormikValidationSchema(signupSchema)}
@@ -54,7 +53,7 @@ const Signup = () => {
                     isSubmitting,
                     /* and other goodies */
                 }) => (
-                    <div className="bg-[#e8ebed] rounded-lg flex h-5/6 w-8/12 mx-auto shadow-xl">
+                    <div className="rounded-lg flex h-5/6 w-8/12 mx-auto shadow-xl bg-secondary/40">
                         <div className="w-6/12"><img src={Image} alt="login-image" className="object-cover h-full rounded-l-lg w-full" /></div>
 
                         <div className="w-6/12" >
@@ -63,9 +62,9 @@ const Signup = () => {
                                     <img src={"/monitor.svg"} alt="" className="w-10 h-10 block mx-auto" />
                                     Sign up for free
                                 </h1>
-                                <div className="text-black">
+                                <div >
                                     Already have an account?
-                                    <Link to={"/login"} className="text-blue-800 font-semibold">
+                                    <Link to={"/login"} className="text-blue-700 font-semibold">
                                         &nbsp; Log in.
                                     </Link>
                                 </div>
@@ -82,7 +81,6 @@ const Signup = () => {
                                             onBlur={handleBlur}
                                             value={values.firstName}
                                             placeholder="First Name"
-                                            className={styles.signup_input}
                                         />
                                         <div className="text-red-600 text-left">{errors.firstName && touched.firstName && errors.firstName}</div>
                                     </div>
@@ -95,7 +93,6 @@ const Signup = () => {
                                             onBlur={handleBlur}
                                             value={values.lastName}
                                             placeholder="Last Name"
-                                            className={styles.signup_input}
                                         />
                                         <div className="text-red-600 text-left">{errors.lastName && touched.lastName && errors.lastName}</div>
                                     </div>
@@ -109,7 +106,6 @@ const Signup = () => {
                                         onBlur={handleBlur}
                                         value={values.email}
                                         placeholder="Email"
-                                        className={styles.signup_input}
                                     />
                                     <div className="text-red-600 text-left">{errors.email && touched.email && errors.email}</div>
                                 </div>
@@ -120,7 +116,6 @@ const Signup = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.password}
-                                        className={styles.signup_input}
                                         placeholder="Password"
                                     />
                                     <div className="text-red-600 text-left">
@@ -134,7 +129,6 @@ const Signup = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.confirmPassword}
-                                        className={styles.signup_input}
                                         placeholder="Confirm password"
                                     />
                                     <div className="text-red-600 text-left">

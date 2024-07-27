@@ -1,6 +1,5 @@
 import { Formik } from "formik";
 import Image from "../../assets/login-page.jpg"
-import styles from "./login.module.css"
 import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -19,7 +18,7 @@ const Login = () => {
     })
 
     return (
-        <div className="h-screen flex place-items-center">
+        <div className="h-screen flex place-items-center bg-[#07080F]">
             <Formik
                 initialValues={{ email: '', password: '', showPassword: false }}
                 validationSchema={toFormikValidationSchema(loginSchema)}
@@ -52,7 +51,7 @@ const Login = () => {
                     isSubmitting,
                     /* and other goodies */
                 }) => (
-                    <div className="bg-[#e8ebed] rounded-lg flex h-5/6 w-8/12 mx-auto shadow-xl ">
+                    <div className=" rounded-lg flex h-5/6 w-8/12 mx-auto shadow-xl bg-secondary/40">
                         <div className="w-6/12"><img src={Image} alt="login-image" className="object-cover h-full rounded-l-lg w-full" /></div>
 
                         <div className="w-6/12" >
@@ -78,7 +77,6 @@ const Login = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
-                                        className={styles.login_input}
                                         placeholder="Email"
                                     />
                                     <div className="text-red-600 text-left">{errors.email && touched.email && errors.email}</div>
@@ -90,7 +88,6 @@ const Login = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.password}
-                                        className={styles.login_input}
                                         placeholder="Password"
                                     />
                                     <div className="text-red-600 text-left">
@@ -105,7 +102,7 @@ const Login = () => {
                                         onChange={handleChange}
                                         checked={values.showPassword}
                                     />
-                                    <Label htmlFor="showPassword" className="text-black cursor-pointer">Show Password</Label>
+                                    <Label htmlFor="showPassword" className="cursor-pointer">Show Password</Label>
                                 </div>
                                 <Button type="submit" disabled={isSubmitting} >
                                     Sign in

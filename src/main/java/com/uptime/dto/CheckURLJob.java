@@ -1,5 +1,6 @@
 package com.uptime.dto;
 
+import com.uptime.model.CheckStatus;
 import com.uptime.model.Monitor;
 import lombok.*;
 
@@ -33,6 +34,8 @@ public class CheckURLJob {
         } catch (Exception ignored) {
             this.result = false;
         }
+        if(monitor!=null)
+        monitor.setCurrentStatus(result? CheckStatus.UP:CheckStatus.DOWN);
     }
 
 }

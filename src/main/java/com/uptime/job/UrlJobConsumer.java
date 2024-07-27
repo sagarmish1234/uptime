@@ -4,6 +4,8 @@ package com.uptime.job;
 import com.uptime.config.MessageQueueConfig;
 import com.uptime.dto.CheckURLJob;
 import com.uptime.model.Activity;
+import com.uptime.model.Monitor;
+import com.uptime.repository.MonitorRepository;
 import com.uptime.service.ActivityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class UrlJobConsumer {
     ActivityService activityService;
 
     @Autowired
+    MonitorRepository monitorRepository;
+
+    @Autowired
     JmsTemplate jmsTemplate;
 
     @JmsListener(destination = MessageQueueConfig.JOB_QUEUE, containerFactory = "containerFactory")
@@ -26,6 +31,9 @@ public class UrlJobConsumer {
         log.info("Message received");
         checkURLJob.execute();
         Activity activity = activityService.createActivity(checkURLJob);
+        Monitor monitor = checkURLJob.getMonitor();
+        monitorRepository.updateMonitorStatus(monitor.getId(),monitor.getCurrentStatus().name());
+
         if (!checkURLJob.getResult()) {
             jmsTemplate.convertAndSend(MessageQueueConfig.MAIL_QUEUE, activity);
         }

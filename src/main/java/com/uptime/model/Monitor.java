@@ -1,6 +1,7 @@
 package com.uptime.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import lombok.*;
 @Table(name = "MONITOR")
 @Entity
 @Builder
+@ToString
 public class Monitor {
 
     @Id
@@ -19,8 +21,12 @@ public class Monitor {
     private String id;
     private String url;
     @ManyToOne
+    @JsonIgnore
     private UserInfo userInfo;
     @Enumerated(EnumType.STRING)
+    private CheckStatus currentStatus;
+    @Enumerated(EnumType.STRING)
     private CheckFrequency checkFrequency;
+    private boolean isPaused=false;
 
 }
