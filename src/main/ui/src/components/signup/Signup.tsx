@@ -7,6 +7,8 @@ import styles from "./signup.module.css"
 import axios from 'axios';
 import { SERVER_URL } from '../../lib/httpclient';
 import { toast } from 'react-toastify';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 const Signup = () => {
     const navigate = useNavigate();
     const signupSchema = z.object({
@@ -21,7 +23,7 @@ const Signup = () => {
     }).refine(data => data.confirmPassword == data.password, { message: "Password do not match", path: ["confirmPassword"] });
 
     return (
-        <div className='h-screen pt-14'>
+        <div className='h-screen flex place-items-center'>
             <Formik
                 initialValues={{ email: '', password: '', confirmPassword: "", firstName: "", lastName: "", company: "" }}
                 validationSchema={toFormikValidationSchema(signupSchema)}
@@ -52,12 +54,12 @@ const Signup = () => {
                     isSubmitting,
                     /* and other goodies */
                 }) => (
-                    <div className="bg-[#f8f9fa] rounded-lg flex h-11/12 w-9/12 mx-auto">
+                    <div className="bg-[#e8ebed] rounded-lg flex h-5/6 w-8/12 mx-auto shadow-xl">
                         <div className="w-6/12"><img src={Image} alt="login-image" className="object-cover h-full rounded-l-lg w-full" /></div>
 
                         <div className="w-6/12" >
-                            <div className="pt-7 ">
-                                <h1 className="text-black noto-sans text-[2rem]" >
+                            <div className="pt-7 text-center">
+                                <h1 className="scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl" >
                                     <img src={"/monitor.svg"} alt="" className="w-10 h-10 block mx-auto" />
                                     Sign up for free
                                 </h1>
@@ -68,12 +70,12 @@ const Signup = () => {
                                     </Link>
                                 </div>
                             </div>
-                            <form onSubmit={handleSubmit} className="flex flex-col mx-auto w-9/12 mt-20 gap-3">
+                            <form onSubmit={handleSubmit} className="flex flex-col mx-auto w-9/12 mt-10 gap-3">
 
                                 <div className='flex w-full gap-2'>
                                     <div className="flex flex-col h-16">
 
-                                        <input
+                                        <Input
                                             type="text"
                                             name="firstName"
                                             onChange={handleChange}
@@ -86,7 +88,7 @@ const Signup = () => {
                                     </div>
                                     <div className="flex flex-col h-16">
 
-                                        <input
+                                        <Input
                                             type="text"
                                             name="lastName"
                                             onChange={handleChange}
@@ -100,7 +102,7 @@ const Signup = () => {
                                 </div>
                                 <div className="flex flex-col h-16">
 
-                                    <input
+                                    <Input
                                         type="email"
                                         name="email"
                                         onChange={handleChange}
@@ -112,7 +114,7 @@ const Signup = () => {
                                     <div className="text-red-600 text-left">{errors.email && touched.email && errors.email}</div>
                                 </div>
                                 <div className="flex flex-col h-16">
-                                    <input
+                                    <Input
                                         type={"password"}
                                         name="password"
                                         onChange={handleChange}
@@ -126,7 +128,7 @@ const Signup = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col h-16">
-                                    <input
+                                    <Input
                                         type={"password"}
                                         name="confirmPassword"
                                         onChange={handleChange}
@@ -139,9 +141,9 @@ const Signup = () => {
                                         {errors.confirmPassword && touched.confirmPassword && errors.confirmPassword}
                                     </div>
                                 </div>
-                                <button type="submit" disabled={isSubmitting} className="bg-orange-700 h-[2.25rem] rounded-[5px] font-bold">
+                                <Button type="submit" disabled={isSubmitting} >
                                     Sign up
-                                </button>
+                                </Button>
                             </form>
                         </div>
                     </div>

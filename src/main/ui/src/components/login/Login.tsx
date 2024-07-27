@@ -7,6 +7,9 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import axios from "axios";
 import { SERVER_URL } from "../../lib/httpclient";
 import { toast } from "react-toastify";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 const Login = () => {
     const navigate = useNavigate();
 
@@ -16,7 +19,7 @@ const Login = () => {
     })
 
     return (
-        <div className="h-screen pt-14">
+        <div className="h-screen flex place-items-center">
             <Formik
                 initialValues={{ email: '', password: '', showPassword: false }}
                 validationSchema={toFormikValidationSchema(loginSchema)}
@@ -49,16 +52,16 @@ const Login = () => {
                     isSubmitting,
                     /* and other goodies */
                 }) => (
-                    <div className="bg-[#f8f9fa] rounded-lg flex h-11/12 w-9/12 mx-auto">
+                    <div className="bg-[#e8ebed] rounded-lg flex h-5/6 w-8/12 mx-auto shadow-xl ">
                         <div className="w-6/12"><img src={Image} alt="login-image" className="object-cover h-full rounded-l-lg w-full" /></div>
 
                         <div className="w-6/12" >
-                            <div className="pt-7 ">
-                                <h1 className="text-black noto-sans text-[2rem]" >
+                            <div className="pt-7 text-center">
+                                <h1 className="scroll-m-20 text-4xl font-bold tracking-tight lg:text-5xl" >
                                     <img src={"/monitor.svg"} alt="" className="w-10 h-10 block mx-auto" />
                                     Welcome back
                                 </h1>
-                                <div className="text-black">
+                                <div className="text-sm font-medium leading-none">
                                     First time here?
                                     <Link to={"/register"} className="text-blue-800 font-semibold">
                                         &nbsp; Sign up for free.
@@ -69,7 +72,7 @@ const Login = () => {
 
                                 <div className="flex flex-col h-16">
 
-                                    <input
+                                    <Input
                                         type="email"
                                         name="email"
                                         onChange={handleChange}
@@ -81,7 +84,7 @@ const Login = () => {
                                     <div className="text-red-600 text-left">{errors.email && touched.email && errors.email}</div>
                                 </div>
                                 <div className="flex flex-col h-16">
-                                    <input
+                                    <Input
                                         type={values.showPassword ? "text" : "password"}
                                         name="password"
                                         onChange={handleChange}
@@ -102,11 +105,11 @@ const Login = () => {
                                         onChange={handleChange}
                                         checked={values.showPassword}
                                     />
-                                    <label htmlFor="showPassword" className="text-black cursor-pointer">Show Password</label>
+                                    <Label htmlFor="showPassword" className="text-black cursor-pointer">Show Password</Label>
                                 </div>
-                                <button type="submit" disabled={isSubmitting} className="bg-orange-700 h-[2.25rem] rounded-[5px] font-bold">
+                                <Button type="submit" disabled={isSubmitting} >
                                     Sign in
-                                </button>
+                                </Button>
                             </form>
                         </div>
                     </div>
