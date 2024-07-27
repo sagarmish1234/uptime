@@ -51,8 +51,7 @@ public class MailService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper;
         helper = new MimeMessageHelper(message, true);//true indicates multipart message
-
-        helper.setFrom(from); // <--- THIS IS IMPORTANT
+        helper.setFrom(String.format("Uptime <%s>",from)); // <--- THIS IS IMPORTANT
 
         helper.setSubject("Welcome to Uptime");
         helper.setTo(userInfo.getEmail());
@@ -78,7 +77,7 @@ public class MailService {
             MimeMessageHelper helper;
             helper = new MimeMessageHelper(message, true);//true indicates multipart message
 
-            helper.setFrom(from); // <--- THIS IS IMPORTANT
+            helper.setFrom(String.format("Uptime <%s>",from)); // <--- THIS IS IMPORTANT
 
             helper.setSubject("Monitoring Alert");
             helper.setTo(activity.getMonitor().getUserInfo().getEmail());
