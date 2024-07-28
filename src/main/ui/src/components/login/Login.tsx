@@ -4,13 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import axios from "axios";
-import { SERVER_URL } from "@/lib/httpclient/index.ts";
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
+import { SERVER_URL } from "src/lib/httpclient/index.ts";
 const Login = () => {
     const navigate = useNavigate();
 
