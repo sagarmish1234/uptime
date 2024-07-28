@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import axios from "axios";
-import { SERVER_URL } from "@/lib/httpclient";
+import { SERVER_URL } from "@/lib/httpclient/index.ts";
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
