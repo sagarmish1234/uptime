@@ -18,7 +18,7 @@ spring:
     port: 587
 
   datasource:
-    url: jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?user=postgres.mhtsraswofpoicrxrame&password=${db_password}&prepareThreshold=0
+    url: jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?user=postgres.mhtsraswofpoicrxrame&password=2lAbTSCHBKxpShLT&prepareThreshold=0
   jpa:
     database: POSTGRESQL
     hibernate:
