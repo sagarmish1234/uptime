@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
-import { SERVER_URL } from "src/lib/httpclient/index.ts";
+import { SERVER_URL } from "@/lib/httpclient";
 const Login = () => {
     const navigate = useNavigate();
 
