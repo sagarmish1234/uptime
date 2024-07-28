@@ -4,5 +4,5 @@ public enum CheckStatus {
 
     UP,
     DOWN,
-    IN_PROGRESS;
+    PAUSED;
 }

@@ -34,7 +34,7 @@ public class MonitorService {
     }
 
     public List<Monitor> fetchMonitorWithForFrequency(CheckFrequency frequency){
-        return monitorRepository.findAllByCheckFrequencyAndIsPaused(frequency,false);
+        return monitorRepository.findAllByCheckFrequencyEqualsAndCurrentStatusNot(frequency,CheckStatus.PAUSED);
     }
 
     public List<Monitor> fetchMonitorsForUser(String email,UserInfo userInfo){

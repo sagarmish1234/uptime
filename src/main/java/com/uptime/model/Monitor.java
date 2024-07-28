@@ -26,6 +26,5 @@ public class Monitor {
     private CheckStatus currentStatus;
     @Enumerated(EnumType.STRING)
     private CheckFrequency checkFrequency;
-    private boolean isPaused=false;
 
 }

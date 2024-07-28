@@ -26,7 +26,7 @@ const Monitors = () => {
     console.log(monitors)
     return (
         <div className="w-full" >
-            <div className="w-5/6 mx-auto mt-20">
+            <div className="w-9/12 mx-auto mt-20">
 
                 <div className="flex justify-between">
                     <div className="inter-500 text-3xl font-semibold">Greetings {user.firstName}</div>

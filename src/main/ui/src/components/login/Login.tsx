@@ -7,10 +7,9 @@ import axios from "axios";
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { CheckedState } from "@radix-ui/react-checkbox";
 import { SERVER_URL } from "@/lib/httpclient";
+import { Eye } from 'lucide-react';
+import { EyeOff } from 'lucide-react';
 const Login = () => {
     const navigate = useNavigate();
 
@@ -92,20 +91,11 @@ const Login = () => {
                                         onBlur={handleBlur}
                                         value={values.password}
                                         placeholder="Password"
+                                        endIcon={!values.showPassword ? <Eye className="hover:cursor-pointer" onClick={() => setFieldValue("showPassword", true)} /> : <EyeOff className="hover:cursor-pointer" onClick={() => setFieldValue("showPassword", false)} />}
                                     />
                                     <div className="text-red-600 text-left">
                                         {errors.password && touched.password && errors.password}
                                     </div>
-                                </div>
-                                <div className="text-left flex items-center gap-2">
-                                    <Checkbox
-
-                                        name="showPassword"
-                                        id="showPassword"
-                                        onCheckedChange={(value: CheckedState) => setFieldValue("showPassword", value)}
-                                        checked={values.showPassword}
-                                    />
-                                    <Label htmlFor="showPassword" className="cursor-pointer">Show Password</Label>
                                 </div>
                                 <Button type="submit" disabled={isSubmitting} >
                                     Sign in

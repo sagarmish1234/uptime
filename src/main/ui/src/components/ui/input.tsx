@@ -5,7 +5,7 @@ import { LucideIcon } from "lucide-react";
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   startIcon?: LucideIcon;
-  endIcon?: LucideIcon;
+  endIcon?: React.ReactNode;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -32,8 +32,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {EndIcon && (
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-muted px-1 rounded-sm">
-            <EndIcon className="text-muted-foreground" size={18} />
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2  px-1 rounded-sm">
+            {endIcon}
           </div>
         )}
       </div>

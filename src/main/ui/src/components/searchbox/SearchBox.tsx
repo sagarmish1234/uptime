@@ -8,6 +8,7 @@ import { createRef, useEffect } from "react";
 const SearchBox = () => {
     const ref = createRef<HTMLInputElement>()
     useEffect(() => {
+
         document.addEventListener("keypress", (event) => {
             if (event.code == "Space") {
                 console.log(event)
@@ -17,7 +18,7 @@ const SearchBox = () => {
     }, [ref])
     return (
         <div className="flex">
-            <Input startIcon={Search} placeholder="Search" endIcon={Space} ref={ref} />
+            <Input startIcon={Search} placeholder="Search" endIcon={<Space size={18} />} ref={ref} />
         </div>
     )
 }

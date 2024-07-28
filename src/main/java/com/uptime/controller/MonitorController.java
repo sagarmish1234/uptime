@@ -33,7 +33,7 @@ public class MonitorController {
     @GetMapping("/monitors/{user}")
     public List<MonitorResponse> fetchMonitorsForUser(@PathVariable String user){
         UserInfo userInfo = UserDetailsServiceImpl.extractCurrentUserInfo();
-        return monitorService.fetchMonitorsForUser(user,userInfo).stream().map(monitor -> new MonitorResponse(monitor.getUrl(),monitor.getCurrentStatus(),monitor.getCheckFrequency(),monitor.isPaused())).toList();
+        return monitorService.fetchMonitorsForUser(user,userInfo).stream().map(monitor -> new MonitorResponse(monitor.getUrl(),monitor.getCurrentStatus(),monitor.getCheckFrequency())).toList();
     }
 
 }
