@@ -5,10 +5,11 @@ import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import axios from "axios";
 import { SERVER_URL } from "../../lib/httpclient";
-import { toast } from "react-toastify";
+import { toast } from "sonner"
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Checkbox } from "../ui/checkbox";
 const Login = () => {
     const navigate = useNavigate();
 
@@ -23,20 +24,20 @@ const Login = () => {
                 initialValues={{ email: '', password: '', showPassword: false }}
                 validationSchema={toFormikValidationSchema(loginSchema)}
                 onSubmit={async (values, { setSubmitting }) => {
-                    const id = toast.loading("Pending login", { closeButton: true, position: "top-center" })
+                    const id = toast.loading("Pending login", { position: "top-center" })
                     try {
                         const response = await axios.post(`${SERVER_URL}/api/v1/login`, values)
                         localStorage.setItem("accessToken", response.data.token)
                         localStorage.setItem("userDetails", JSON.stringify(response.data.userInfo))
                         setSubmitting(false);
                         console.log(response)
-                        toast.update(id, { render: "Login success", type: "success", isLoading: false, autoClose: 2000 });
+                        toast.success("Login success", { id: id, duration: 2000 });
                         navigate("/monitors");
                     }
                     catch (e) {
                         console.log("not authenticated")
                         if (axios.isAxiosError(e)) {
-                            toast.update(id, { render: e?.response?.data?.message, type: "error", isLoading: false });
+                            toast.error(e?.response?.data?.message, { id, duration: 2000 });
                         }
                     }
                 }}
@@ -48,6 +49,7 @@ const Login = () => {
                     handleChange,
                     handleBlur,
                     handleSubmit,
+                    setFieldValue,
                     isSubmitting,
                     /* and other goodies */
                 }) => (
@@ -95,11 +97,11 @@ const Login = () => {
                                     </div>
                                 </div>
                                 <div className="text-left flex items-center gap-2">
-                                    <input
-                                        type="checkbox"
+                                    <Checkbox
+
                                         name="showPassword"
                                         id="showPassword"
-                                        onChange={handleChange}
+                                        onCheckedChange={(value) => setFieldValue("showPassword", value)}
                                         checked={values.showPassword}
                                     />
                                     <Label htmlFor="showPassword" className="cursor-pointer">Show Password</Label>

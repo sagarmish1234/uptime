@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.OPTIONS).permitAll())
-                .authorizeHttpRequests(request -> request.requestMatchers("/actuator/**", "/api/v1/login", "/api/v1/signup","/api/v1/verify/token**").permitAll())
+                .authorizeHttpRequests(request -> request.requestMatchers("/actuator/**", "/api/v1/login", "/api/v1/signup","/api/v1/verify").permitAll())
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/**").authenticated())
                 .authorizeHttpRequests(request -> request.anyRequest().permitAll())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

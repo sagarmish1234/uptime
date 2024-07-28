@@ -5,7 +5,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import Image from "../../assets/register-page.jpg"
 import axios from 'axios';
 import { SERVER_URL } from '../../lib/httpclient';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 const Signup = () => {
@@ -27,18 +27,18 @@ const Signup = () => {
                 initialValues={{ email: '', password: '', confirmPassword: "", firstName: "", lastName: "", company: "" }}
                 validationSchema={toFormikValidationSchema(signupSchema)}
                 onSubmit={async (values, { setSubmitting }) => {
-                    const id = toast.loading("Pending signup", { closeButton: true, position: "top-center" })
+                    const id = toast.loading("Pending signup")
                     try {
                         const response = await axios.post(`${SERVER_URL}/api/v1/signup`, values)
                         setSubmitting(false);
-                        toast.update(id, { render: "Account created please verify email", type: "success", isLoading: false, autoClose: 2000 });
+                        toast.success("Account created please verify email", { id: id, duration: 2000 });
                         console.log(response)
                         navigate("/login");
                     }
                     catch (e) {
                         console.log(e)
                         if (axios.isAxiosError(e)) {
-                            toast.update(id, { render: e?.response?.data?.message, type: "error", isLoading: false, autoClose: 2000 });
+                            toast.error(e?.response?.data?.message, { id, duration: 2000 });
                         }
                     }
                 }}

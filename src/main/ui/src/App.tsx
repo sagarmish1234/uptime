@@ -6,8 +6,6 @@ import {
 } from "react-router-dom";
 import Signup from './components/signup/Signup';
 import Monitors from './components/monitors/Monitors';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import ProtectedRoutes from './components/protectedroute/ProtectedRoutes';
 import Incidents from './components/incidents/Incidents';
 import { ThemeProvider } from "@/components/theme-provider"
@@ -15,6 +13,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { Toaster } from "@/components/ui/sonner"
 
 const queryClient = new QueryClient()
 
@@ -53,7 +52,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme='dark' storageKey="vite-ui-theme">
         <RouterProvider router={router} />
-        <ToastContainer />
+        <Toaster position='top-center' richColors />
       </ThemeProvider>
     </QueryClientProvider>
   )
