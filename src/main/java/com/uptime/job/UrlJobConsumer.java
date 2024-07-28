@@ -30,9 +30,10 @@ public class UrlJobConsumer {
     public void consumeJob(CheckURLJob checkURLJob) {
         log.info("Message received");
         checkURLJob.execute();
-        Activity activity = activityService.createActivity(checkURLJob);
         Monitor monitor = checkURLJob.getMonitor();
         monitorRepository.updateMonitorStatus(monitor.getId(),monitor.getCurrentStatus().name());
+        Activity activity = activityService.createActivity(checkURLJob);
+        log.info("Activity {}-{}",activity.getStatus(),activity.getMonitor());
 
         if (!checkURLJob.getResult()) {
             jmsTemplate.convertAndSend(MessageQueueConfig.MAIL_QUEUE, activity);

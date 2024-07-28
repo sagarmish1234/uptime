@@ -21,7 +21,6 @@ public class Monitor {
     private String id;
     private String url;
     @ManyToOne
-    @JsonIgnore
     private UserInfo userInfo;
     @Enumerated(EnumType.STRING)
     private CheckStatus currentStatus;

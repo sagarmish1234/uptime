@@ -2,6 +2,7 @@ package com.uptime.controller;
 
 import com.uptime.dto.MessageResponse;
 import com.uptime.dto.MonitorRequest;
+import com.uptime.dto.MonitorResponse;
 import com.uptime.model.Monitor;
 import com.uptime.model.UserInfo;
 import com.uptime.service.MonitorService;
@@ -30,9 +31,9 @@ public class MonitorController {
     }
 
     @GetMapping("/monitors/{user}")
-    public List<Monitor> fetchMonitorsForUser(@PathVariable String user){
+    public List<MonitorResponse> fetchMonitorsForUser(@PathVariable String user){
         UserInfo userInfo = UserDetailsServiceImpl.extractCurrentUserInfo();
-        return monitorService.fetchMonitorsForUser(user,userInfo);
+        return monitorService.fetchMonitorsForUser(user,userInfo).stream().map(monitor -> new MonitorResponse(monitor.getUrl(),monitor.getCurrentStatus(),monitor.getCheckFrequency(),monitor.isPaused())).toList();
     }
 
 }
