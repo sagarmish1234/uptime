@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod'
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import axios from "axios";
-import { SERVER_URL } from "../../lib/httpclient";
+import { SERVER_URL } from "@/lib/httpclient";
 import { toast } from "sonner"
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Checkbox } from "../ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckedState } from "@radix-ui/react-checkbox";
 const Login = () => {
     const navigate = useNavigate();
 
@@ -101,7 +102,7 @@ const Login = () => {
 
                                         name="showPassword"
                                         id="showPassword"
-                                        onCheckedChange={(value) => setFieldValue("showPassword", value)}
+                                        onCheckedChange={(value: CheckedState) => setFieldValue("showPassword", value)}
                                         checked={values.showPassword}
                                     />
                                     <Label htmlFor="showPassword" className="cursor-pointer">Show Password</Label>
