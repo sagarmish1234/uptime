@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface MonitorRepository extends JpaRepository<Monitor,String> {
 
-    List<Monitor> findAllByCheckFrequencyEqualsAndCurrentStatusNot(CheckFrequency frequency,CheckStatus status);
+    List<Monitor> findAllByCheckFrequencyEqualsAndCurrentStatusNotAndUserInfoIdIsNotNull(CheckFrequency frequency,CheckStatus status);
 
     List<Monitor> findAllByUserInfo(UserInfo userInfo);
 

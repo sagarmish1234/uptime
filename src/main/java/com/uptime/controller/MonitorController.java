@@ -3,7 +3,6 @@ package com.uptime.controller;
 import com.uptime.dto.MessageResponse;
 import com.uptime.dto.MonitorRequest;
 import com.uptime.dto.MonitorResponse;
-import com.uptime.model.Monitor;
 import com.uptime.model.UserInfo;
 import com.uptime.service.MonitorService;
 import com.uptime.service.UserDetailsServiceImpl;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,6 +38,12 @@ public class MonitorController {
     public MessageResponse removeMonitor(@PathVariable String id){
         monitorService.removeMonitor(id);
         return new MessageResponse("Monitor successfully removed");
+    }
+
+    @PutMapping("/monitor/{id}/pause/{toPause}")
+    public MessageResponse pauseUnpauseMonitor(@PathVariable String id,@PathVariable Boolean toPause ){
+        monitorService.pauseUnpauseMonitor(id, toPause);
+        return new MessageResponse("Monitor paused successfully");
     }
 
 }

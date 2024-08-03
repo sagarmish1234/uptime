@@ -35,7 +35,7 @@ public class CheckURLJob {
             this.result = false;
         }
         if(monitor!=null)
-        monitor.setCurrentStatus(result? CheckStatus.UP:CheckStatus.DOWN);
+            monitor.setCurrentStatus(result? CheckStatus.UP:CheckStatus.DOWN);
     }
 
 }

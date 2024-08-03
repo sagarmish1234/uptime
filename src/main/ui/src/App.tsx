@@ -9,6 +9,7 @@ import Monitors from '@/components/monitors/Monitors';
 import ProtectedRoutes from '@/components/protectedroute/ProtectedRoutes';
 import Incidents from '@/components/incidents/Incidents';
 import { ThemeProvider } from "@/components/theme-provider"
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import {
   QueryClient,
   QueryClientProvider,
@@ -50,12 +51,13 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme='dark' storageKey="vite-ui-theme">
+      <ReactQueryDevtools initialIsOpen={false} />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <RouterProvider router={router} />
-        <Toaster position='top-center' richColors />
+        <Toaster position="top-center" richColors />
       </ThemeProvider>
     </QueryClientProvider>
-  )
+  );
 }
 
 export default App

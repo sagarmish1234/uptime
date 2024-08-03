@@ -6,9 +6,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { MoreHorizontal, Target } from 'lucide-react';
+import { Target } from 'lucide-react';
 import { MonitorType } from '../monitors/Monitors';
 import PulsingCircle from '../pulsingcircle/PulsingCircle';
+import MonitorActions from '@/components/monitoraction/MonitorActions';
 import {
   ColumnDef,
   useReactTable,
@@ -16,15 +17,6 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { cn } from '@/lib/utils';
-import { Button } from '../ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 type StatusType = string;
 type ColorMap = {
   [key in StatusType]: {
@@ -49,8 +41,6 @@ const colorMap: ColorMap = {
 };
 
 const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
-  console.log(monitors);
-
   const formatFrequency = (frequency: string) => {
     const tokens = frequency.split('_');
     return `${tokens[1]}${tokens[2][0].toLocaleLowerCase()}`;
@@ -132,29 +122,7 @@ const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
       cell: ({ row }) => {
         return (
           <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem
-                  onClick={() =>
-                    navigator.clipboard.writeText(row.id)
-                  }
-                >
-                  Copy payment ID
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>View customer</DropdownMenuItem>
-                <DropdownMenuItem>
-                  View payment details
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <MonitorActions monitor={row.original} />
           </TableCell>
         );
       },
