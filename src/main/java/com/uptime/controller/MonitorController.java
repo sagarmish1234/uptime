@@ -23,7 +23,7 @@ public class MonitorController {
     @Autowired
     MonitorService monitorService;
 
-    @PostMapping("/create/monitor")
+    @PostMapping("/monitor/create")
     public MessageResponse createMonitor(@RequestBody MonitorRequest monitorRequest) {
         UserInfo userInfo = UserDetailsServiceImpl.extractCurrentUserInfo();
         monitorService.createMonitor(monitorRequest, userInfo);
@@ -33,7 +33,13 @@ public class MonitorController {
     @GetMapping("/monitors/{user}")
     public List<MonitorResponse> fetchMonitorsForUser(@PathVariable String user){
         UserInfo userInfo = UserDetailsServiceImpl.extractCurrentUserInfo();
-        return monitorService.fetchMonitorsForUser(user,userInfo).stream().map(monitor -> new MonitorResponse(monitor.getUrl(),monitor.getCurrentStatus(),monitor.getCheckFrequency())).toList();
+        return monitorService.fetchMonitorsForUser(user,userInfo).stream().map(monitor -> new MonitorResponse(monitor.getId(),monitor.getUrl(),monitor.getCurrentStatus(),monitor.getCheckFrequency())).toList();
+    }
+
+    @DeleteMapping("/monitor/{id}/delete")
+    public MessageResponse removeMonitor(@PathVariable String id){
+        monitorService.removeMonitor(id);
+        return new MessageResponse("Monitor successfully removed");
     }
 
 }

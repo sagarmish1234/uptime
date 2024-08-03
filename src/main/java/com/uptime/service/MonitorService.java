@@ -41,4 +41,8 @@ public class MonitorService {
         return monitorRepository.findAllByUserInfo(userInfo);
     }
 
+    public void removeMonitor(String id){
+        monitorRepository.deleteById(id);
+    }
+
 }

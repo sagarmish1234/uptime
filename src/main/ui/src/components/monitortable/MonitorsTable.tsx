@@ -1,84 +1,184 @@
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { Target } from 'lucide-react';
-import { MonitorType } from "../monitors/Monitors";
-import PulsingCircle from "../pulsingcircle/PulsingCircle";
-
+import { MonitorType } from '../monitors/Monitors';
+import PulsingCircle from '../pulsingcircle/PulsingCircle';
+import {
+  ColumnDef,
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+} from '@tanstack/react-table';
+import { cn } from '@/lib/utils';
 
 type StatusType = string;
 type ColorMap = {
-    [key in StatusType]: {
-        text: string;
-        background: string;
-    }
+  [key in StatusType]: {
+    text: string;
+    background: string;
+  };
 };
 
 const colorMap: ColorMap = {
-    UP: {
-        text: "text-green-600",
-        background: "bg-green-600"
-    },
-    DOWN: {
-        text: "text-red-600",
-        background: "bg-red-600"
-    },
-    PAUSED: {
-        text: "text-amber-600",
-        background: "bg-amber-600"
-    }
-}
-
-
+  UP: {
+    text: 'text-green-600',
+    background: 'bg-green-600',
+  },
+  DOWN: {
+    text: 'text-red-600',
+    background: 'bg-red-600',
+  },
+  PAUSED: {
+    text: 'text-amber-600',
+    background: 'bg-amber-600',
+  },
+};
 
 const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
+  console.log(monitors);
 
-    console.log(monitors)
+  const formatFrequency = (frequency: string) => {
+    const tokens = frequency.split('_');
+    return `${tokens[1]}${tokens[2][0].toLocaleLowerCase()}`;
+  };
 
-    const formatFrequency = (frequency: string) => {
-        const tokens = frequency.split("_")
-        return `${tokens[1]}${tokens[2][0].toLocaleLowerCase()}`
-    }
+  const getPulseColor = (currentStatus: string) => {
+    return colorMap[currentStatus].background;
+  };
 
-    const getPulseColor = (monitor: MonitorType) => {
-        return colorMap[monitor.currentStatus].background
-    }
+  const getStatusColor = (status: string) => {
+    return colorMap[status].text;
+  };
 
-    const getStatusColor = (monitor: MonitorType) => {
-        return colorMap[monitor.currentStatus].text
-    }
+  const formatUrl = (url: string) => {
+    return url.split('https://')[1];
+  };
+  const columns: ColumnDef<MonitorType>[] = [
+    {
+      accessorKey: 'currentStatus',
+      header: 'Monitors',
+      cell: ({ row }) => {
+        return (
+          <TableCell className="flex justify-start relative rounded-l-lg w-10">
+            <PulsingCircle
+              className={cn(
+                'left-10',
+                getPulseColor(row.getValue('currentStatus'))
+              )}
+            />
+          </TableCell>
+        );
+      },
+    },
+    {
+      accessorKey: 'url',
+      header: '',
+      cell: ({ row }) => {
+        return (
+          <TableCell className="font-medium text-left">
+            {formatUrl(row.getValue('url'))}
+          </TableCell>
+        );
+      },
+    },
+    {
+      accessorKey: 'currentStatus',
+      header: '',
+      cell: ({ row }) => {
+        return (
+          <TableCell
+            className={
+              'font-semibold ' +
+              getStatusColor(row.getValue('currentStatus'))
+            }
+          >
+            {' '}
+            {row.getValue('currentStatus')}
+          </TableCell>
+        );
+      },
+    },
+    {
+      accessorKey: 'checkFrequency',
+      header: '',
+      cell: ({ row }) => {
+        return (
+          <TableCell className="flex gap-1 place-items-center text-[grey]">
+            {' '}
+            <Target size={18} />
+            {formatFrequency(row.getValue('checkFrequency'))}
+          </TableCell>
+        );
+      },
+    },
+    {
+      id: 'actions',
+      cell: ({ row }) => {
+        
+      },
+    },
+  ];
 
-    return (
-        <div className="border-[1px] mt-10 rounded-xl">
-            <Table >
-                {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-                <TableHeader >
-                    <TableRow >
-                        <TableHead className="w-[100px]">Monitors</TableHead>
-                        {/* <TableHead>Status</TableHead> */}
-                        {/* <TableHead>Method</TableHead> */}
-                        {/* <TableHead className="text-right">Amount</TableHead> */}
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {monitors && monitors.map((monitor) => (
-                        <TableRow key={monitor.id} className="bg-secondary/20">
-                            <TableCell className="flex place-items-center relative"><PulsingCircle className={getPulseColor(monitor)} /></TableCell>
-                            <TableCell className="font-medium">{monitor.url}</TableCell>
-                            <TableCell className={"font-semibold " + getStatusColor(monitor)}> {monitor.currentStatus}</TableCell>
-                            <TableCell className="flex gap-1 place-items-center text-[grey]"> <Target size={18} />{formatFrequency(monitor.checkFrequency)}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
+  const table = useReactTable({
+    data: monitors,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
-            </Table>
-        </div>
-    )
-}
+  return (
+    <div className="border-[1px] mt-10 rounded-xl overflow-hidden">
+      <Table>
+        {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
+        <TableHeader>
+          {table &&
+            table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id} className="w-10">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          {/* <TableHead className="w-[100px]">Monitors</TableHead> */}
+          {/* <TableHead>Status</TableHead> */}
+          {/* <TableHead>Method</TableHead> */}
+          {/* <TableHead className="text-right">Amount</TableHead> */}
+        </TableHeader>
+        <TableBody>
+          {monitors &&
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <>
+                    {flexRender(
+                      cell.column.columnDef.cell,
+                      cell.getContext()
+                    )}
+                  </>
+                ))}
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
 
-export default MonitorsTable
+export default MonitorsTable;

@@ -20,6 +20,7 @@ const monitorLoader = async () => {
 export type MonitorType = { url: string, id: string, currentStatus: string, checkFrequency: string, isPaused: boolean }
 
 
+
 const Monitors = () => {
     const user = getUserDetails();
     const monitors = useQuery({ queryKey: ['monitors'], queryFn: monitorLoader, refetchInterval: 60 * 1000 })
