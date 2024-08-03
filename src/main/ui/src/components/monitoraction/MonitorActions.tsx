@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Settings,
   Pause,
@@ -42,18 +41,20 @@ const MonitorActions = ({ monitor }: { monitor: MonitorType }) => {
           (monitor.currentStatus != 'PAUSED' ? (
             <DropdownMenuItem
               onClick={async () => {
+                const id = toast.loading('In progress');
                 try {
-                  const id = toast.loading('In progress');
                   await pauseUnpauseMonitor(monitor.id, true);
                   toast.success('Monitor paused successfully', {
                     id,
                     duration: 2000,
                   });
                 } catch (e) {
-                  toast.error(e?.response?.data?.message, {
-                    id,
-                    duration: 2000,
-                  });
+                  if (axios.isAxiosError(e)) {
+                    toast.error(e?.response?.data?.message, {
+                      id,
+                      duration: 2000,
+                    });
+                  }
                 }
                 queryClient.invalidateQueries({
                   queryKey: ['monitors'],
@@ -66,8 +67,8 @@ const MonitorActions = ({ monitor }: { monitor: MonitorType }) => {
           ) : (
             <DropdownMenuItem
               onClick={async () => {
+                const id = toast.loading('In progress');
                 try {
-                  const id = toast.loading('In progress');
                   await pauseUnpauseMonitor(monitor.id, false);
                   queryClient.invalidateQueries({
                     queryKey: ['monitors'],
@@ -97,8 +98,8 @@ const MonitorActions = ({ monitor }: { monitor: MonitorType }) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={async () => {
+            const id = toast.loading('In progress');
             try {
-              const id = toast.loading('In progress');
               await deleteMonitor(monitor.id);
               queryClient.invalidateQueries({
                 queryKey: ['monitors'],
