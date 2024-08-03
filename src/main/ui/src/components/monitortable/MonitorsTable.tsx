@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Target } from 'lucide-react';
+import { MoreHorizontal, Target } from 'lucide-react';
 import { MonitorType } from '../monitors/Monitors';
 import PulsingCircle from '../pulsingcircle/PulsingCircle';
 import {
@@ -16,7 +16,15 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { cn } from '@/lib/utils';
-
+import { Button } from '../ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 type StatusType = string;
 type ColorMap = {
   [key in StatusType]: {
@@ -109,10 +117,12 @@ const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
       header: '',
       cell: ({ row }) => {
         return (
-          <TableCell className="flex gap-1 place-items-center text-[grey]">
+          <TableCell className=" text-[grey]">
             {' '}
-            <Target size={18} />
-            {formatFrequency(row.getValue('checkFrequency'))}
+            <div className="flex gap-1 place-items-center">
+              <Target size={18} />
+              {formatFrequency(row.getValue('checkFrequency'))}
+            </div>
           </TableCell>
         );
       },
@@ -120,7 +130,33 @@ const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
     {
       id: 'actions',
       cell: ({ row }) => {
-        
+        return (
+          <TableCell>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() =>
+                    navigator.clipboard.writeText(row.id)
+                  }
+                >
+                  Copy payment ID
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>View customer</DropdownMenuItem>
+                <DropdownMenuItem>
+                  View payment details
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </TableCell>
+        );
       },
     },
   ];
