@@ -1,4 +1,4 @@
-package com.uptime.dto;
+package com.uptime.dto.auth;
 
 import com.uptime.model.UserInfo;
 

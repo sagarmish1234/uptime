@@ -1,4 +1,4 @@
-package com.uptime.dto;
+package com.uptime.dto.auth;
 
 import com.uptime.model.UserInfo;
 import com.uptime.model.UserRole;
@@ -20,15 +20,14 @@ public class CustomUserDetails implements UserDetails {
     Collection<? extends GrantedAuthority> authorities;
     private final boolean verified;
 
-    public CustomUserDetails(UserInfo byUsername) {
-        this.username = byUsername.getEmail();
-        this.password = byUsername.getPassword();
-        this.verified = byUsername.isVerified();
-        this.userInfo = byUsername;
+    public CustomUserDetails(UserInfo userInfo) {
+        this.username = userInfo.getEmail();
+        this.password = userInfo.getPassword();
+        this.verified = userInfo.isVerified();
+        this.userInfo = userInfo;
         List<GrantedAuthority> auths = new ArrayList<>();
 
-        for (UserRole role : byUsername.getRoles()) {
-
+        for (UserRole role : userInfo.getRoles()) {
             auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
         }
         this.authorities = auths;

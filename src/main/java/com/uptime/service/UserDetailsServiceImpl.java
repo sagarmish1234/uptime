@@ -1,8 +1,8 @@
 package com.uptime.service;
 
 import com.uptime.config.SecurityConfig;
-import com.uptime.dto.CustomUserDetails;
-import com.uptime.dto.SignupRequest;
+import com.uptime.dto.auth.CustomUserDetails;
+import com.uptime.dto.auth.SignupRequest;
 import com.uptime.exception.UserExistsException;
 import com.uptime.model.UserInfo;
 import com.uptime.model.VerificationToken;

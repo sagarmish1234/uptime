@@ -1,4 +1,4 @@
-package com.uptime.dto;
+package com.uptime.dto.monitor;
 
 import com.uptime.model.CheckFrequency;
 

@@ -1,7 +1,7 @@
 package com.uptime.service;
 
 import com.uptime.dto.CheckURLJob;
-import com.uptime.dto.MonitorRequest;
+import com.uptime.dto.monitor.MonitorRequest;
 import com.uptime.exception.MonitorNotFound;
 import com.uptime.model.CheckFrequency;
 import com.uptime.model.CheckStatus;
@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.apache.commons.lang3.BooleanUtils.TRUE;
 
 @Service
 public class MonitorService {

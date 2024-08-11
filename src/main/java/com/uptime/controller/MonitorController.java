@@ -1,8 +1,8 @@
 package com.uptime.controller;
 
 import com.uptime.dto.MessageResponse;
-import com.uptime.dto.MonitorRequest;
-import com.uptime.dto.MonitorResponse;
+import com.uptime.dto.monitor.MonitorRequest;
+import com.uptime.dto.monitor.MonitorResponse;
 import com.uptime.model.UserInfo;
 import com.uptime.service.MonitorService;
 import com.uptime.service.UserDetailsServiceImpl;
