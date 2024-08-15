@@ -79,7 +79,7 @@ const UpdateMonitor = ({
               queryClient.invalidateQueries({
                 queryKey: ['monitors'],
               });
-              setIsOpen(false);
+              controlOpen(false);
             }}
           >
             {({
