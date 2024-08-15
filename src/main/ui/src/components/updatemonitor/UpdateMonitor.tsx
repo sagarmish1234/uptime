@@ -33,7 +33,6 @@ const UpdateMonitor = ({
 }) => {
   const queryClient = useQueryClient();
   const client = createClient();
-  console.log({ openSheet });
   return (
     <div>
       <Sheet

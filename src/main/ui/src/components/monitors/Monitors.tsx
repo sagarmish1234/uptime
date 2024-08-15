@@ -31,7 +31,6 @@ const Monitors = () => {
     queryFn: monitorLoader,
     refetchInterval: 60 * 1000,
   });
-  console.log(monitors);
   return (
     <div className="w-full">
       <div className="w-9/12 mx-auto mt-20">

@@ -10,6 +10,8 @@ import { Target } from 'lucide-react';
 import { MonitorType } from '../monitors/Monitors';
 import PulsingCircle from '../pulsingcircle/PulsingCircle';
 import MonitorActions from '@/components/monitoraction/MonitorActions';
+import { useTableStore } from '@/lib/hooks/state';
+import { useEffect } from 'react';
 import {
   ColumnDef,
   useReactTable,
@@ -46,6 +48,7 @@ const colorMap: ColorMap = {
 const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
   const [columnFilters, setColumnFilters] =
     useState<ColumnFiltersState>([]);
+  const { setTable } = useTableStore();
 
   const getPulseColor = (currentStatus: string) => {
     return colorMap[currentStatus].background;
@@ -60,7 +63,7 @@ const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
   };
   const columns: ColumnDef<MonitorType>[] = [
     {
-      accessorKey: 'currentStatus',
+      accessorKey: 'id',
       header: 'Monitors',
       cell: ({ row }) => {
         return (
@@ -140,6 +143,9 @@ const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
       columnFilters,
     },
   });
+  useEffect(() => {
+    setTable(table);
+  }, [table, setTable]);
 
   return (
     <div className="border-[1px] mt-10 rounded-xl overflow-hidden">
