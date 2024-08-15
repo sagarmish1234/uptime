@@ -46,4 +46,10 @@ public class MonitorController {
         return new MessageResponse("Monitor paused successfully");
     }
 
+    @PutMapping("/monitor/{id}/update")
+    public MessageResponse updateMonitor(@PathVariable String id,@RequestBody MonitorRequest request){
+        monitorService.updateMonitor(id,request);
+        return new MessageResponse("Monitor updated successfully");
+    }
+
 }

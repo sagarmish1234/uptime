@@ -13,6 +13,8 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
+import java.beans.PropertyChangeListener;
+
 @Component
 @Slf4j
 public class UrlJobConsumer {
@@ -34,7 +36,6 @@ public class UrlJobConsumer {
         monitorRepository.updateMonitorStatus(monitor.getId(),monitor.getCurrentStatus().name());
         Activity activity = activityService.createActivity(checkURLJob);
         log.info("Activity {}-{}",activity.getStatus(),activity.getMonitor());
-
         if (!checkURLJob.getResult()) {
             jmsTemplate.convertAndSend(MessageQueueConfig.MAIL_QUEUE, activity);
         }

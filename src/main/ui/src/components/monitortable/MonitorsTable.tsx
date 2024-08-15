@@ -15,8 +15,11 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
+  getFilteredRowModel,
+  ColumnFiltersState,
 } from '@tanstack/react-table';
-import { cn } from '@/lib/utils';
+import { cn, formatFrequency } from '@/lib/utils';
+import { useState } from 'react';
 type StatusType = string;
 type ColorMap = {
   [key in StatusType]: {
@@ -41,10 +44,8 @@ const colorMap: ColorMap = {
 };
 
 const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
-  const formatFrequency = (frequency: string) => {
-    const tokens = frequency.split('_');
-    return `${tokens[1]}${tokens[2][0].toLocaleLowerCase()}`;
-  };
+  const [columnFilters, setColumnFilters] =
+    useState<ColumnFiltersState>([]);
 
   const getPulseColor = (currentStatus: string) => {
     return colorMap[currentStatus].background;
@@ -133,6 +134,11 @@ const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
     data: monitors,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    state: {
+      columnFilters,
+    },
   });
 
   return (
@@ -157,10 +163,6 @@ const MonitorsTable = ({ monitors }: { monitors: MonitorType[] }) => {
                 })}
               </TableRow>
             ))}
-          {/* <TableHead className="w-[100px]">Monitors</TableHead> */}
-          {/* <TableHead>Status</TableHead> */}
-          {/* <TableHead>Method</TableHead> */}
-          {/* <TableHead className="text-right">Amount</TableHead> */}
         </TableHeader>
         <TableBody>
           {monitors &&

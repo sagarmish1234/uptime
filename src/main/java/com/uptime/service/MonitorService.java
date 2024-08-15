@@ -64,6 +64,16 @@ public class MonitorService {
         }
     }
 
+    public void updateMonitor(String id,  MonitorRequest  request){
+        Optional<Monitor> monitorOptional = monitorRepository.findById(id);
+        if(monitorOptional.isEmpty())
+            throw new MonitorNotFound();
+        Monitor monitor = monitorOptional.get();
+        monitor.setCheckFrequency(request.checkFrequency());
+        monitor.setUrl(request.url());
+        monitorRepository.save(monitor);
+    }
+
     private static CheckURLJob getJob(String url) {
         CheckURLJob checkURLJob = new CheckURLJob();
         checkURLJob.setUrl(url);
