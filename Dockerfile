@@ -21,6 +21,6 @@ COPY --from=build /app/target/webapp-1.0-SNAPSHOT.jar app.jar
 EXPOSE 8081
 
 # Run the application
-ENTRYPOINT ["java","-Ddb_password=E3gVAdRt886GCe2V","-DSPRING_PROFILES_ACTIVE=prod","-jar", "app.jar"]
+ENTRYPOINT ["java","-Ddb_password=E3gVAdRt886GCe2V","-Dspring.profiles.active=prod","-jar", "app.jar"]
 
 # Note: Replace "your-app-name.jar" with the actual name of your jar file.
