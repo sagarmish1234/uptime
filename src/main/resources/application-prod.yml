@@ -1,0 +1,27 @@
+logging:
+  level:
+    root: INFO
+spring:
+  artemis:
+    mode: EMBEDDED
+  mail:
+    properties:
+      mail.smtp.connecttimeout: 60000
+      mail.smtp.timeout: 30000
+      mail.smtp.writetimeout: 50000
+      mail.store.protocol: pop3
+      mail.smtp.starttls.enable: true
+      mail.smtp.auth: true
+    host: smtp.office365.com
+    username: bot.0011@outlook.com
+    password: trewqZxcbnMpo#uy
+    port: 587
+
+  datasource:
+    url: jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?user=postgres.mhtsraswofpoicrxrame&password=2lAbTSCHBKxpShLT&prepareThreshold=0
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+server:
+  port: ${PORT}

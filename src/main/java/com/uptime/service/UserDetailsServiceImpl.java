@@ -7,6 +7,7 @@ import com.uptime.exception.UserExistsException;
 import com.uptime.model.UserInfo;
 import com.uptime.model.VerificationToken;
 import com.uptime.repository.UserInfoRepository;
+import com.uptime.service.mail.MailService;
 import com.uptime.util.ServiceConstants;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;

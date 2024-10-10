@@ -1,30 +1,25 @@
-package com.uptime.service;
+package com.uptime.service.mail;
 
 import com.uptime.model.Activity;
 import com.uptime.model.UserInfo;
 import com.uptime.model.VerificationToken;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 @Slf4j
-public class MailService {
+public class DefaultMailService implements MailService{
 
     @Value("${spring.mail.username}")
     private String from;
@@ -32,15 +27,14 @@ public class MailService {
 //    @Value("${server.port}")
 //    private String port;
 
-    @Value("${PUBLIC_URL}")
+    @Value("${RENDER_EXTERNAL_URL}")
     private String url;
 
 
     private final JavaMailSender javaMailSender;
     private final Configuration configuration;
 
-    public MailService(JavaMailSender javaMailSender, Configuration configuration){
-
+    public DefaultMailService(JavaMailSender javaMailSender, Configuration configuration){
         this.javaMailSender = javaMailSender;
         this.configuration = configuration;
     }

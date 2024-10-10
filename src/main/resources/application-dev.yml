@@ -24,4 +24,7 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  port: 8081
+  port: ${PORT}
+
+RENDER_EXTERNAL_URL: http://localhost:8081
+PORT: 8081
