@@ -6,6 +6,6 @@ import com.uptime.model.VerificationToken;
 
 public interface MailService {
 
-    void sendMail(UserInfo userInfo, VerificationToken verificationToken);
+    boolean sendMail(UserInfo userInfo, VerificationToken verificationToken);
     void sendAlertMail(Activity activity);
 }

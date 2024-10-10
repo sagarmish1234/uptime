@@ -25,3 +25,5 @@ spring:
       ddl-auto: update
 server:
   port: ${PORT}
+
+MAIL_TOKEN: mlsn.30657ce954add2602f52aee5b573770855933495f6242040d6cd3a46bfc5f837

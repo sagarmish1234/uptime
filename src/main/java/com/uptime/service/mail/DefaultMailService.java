@@ -39,7 +39,7 @@ public class DefaultMailService implements MailService{
         this.configuration = configuration;
     }
 
-    public void sendMail(UserInfo userInfo, VerificationToken verificationToken) {
+    public boolean sendMail(UserInfo userInfo, VerificationToken verificationToken) {
        try{
 
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -51,9 +51,11 @@ public class DefaultMailService implements MailService{
         helper.setTo(userInfo.getEmail());
         helper.setText(getEmailContent(userInfo,verificationToken.getToken()), true);//true indicates body is html
         javaMailSender.send(message);
+        return true;
        } catch (Exception e) {
             log.error("Could not send email",e);
        }
+       return false;
     }
     String getEmailContent(UserInfo user,String token) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();

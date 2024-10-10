@@ -1,5 +1,6 @@
 package com.uptime.config;
 
+import com.mailersend.sdk.MailerSend;
 import com.uptime.interceptor.ReactAppInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,11 @@ public class ApplicationConfig implements WebMvcConfigurer {
     @Bean
     public ExecutorService executorService(){
         return Executors.newVirtualThreadPerTaskExecutor();
+    }
+
+    @Bean
+    public MailerSend mailerSend(){
+        return new MailerSend();
     }
 
     @Autowired

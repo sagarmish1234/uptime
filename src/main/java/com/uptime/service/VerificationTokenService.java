@@ -29,7 +29,11 @@ public class VerificationTokenService {
                 .token(UUID.randomUUID().toString())
                 .build();
         verificationToken.calculateExpiryDate();
-        return verificationTokenRepository.save(verificationToken);
+        return verificationToken;
+    }
+
+    public void saveVerificationToken(VerificationToken token){
+        verificationTokenRepository.save(token);
     }
 
     public void completeSignup(String token) {

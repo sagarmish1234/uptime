@@ -45,7 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public static UserInfo extractCurrentUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getPrincipal() instanceof CustomUserDetails userDetails){
+        if (authentication.getPrincipal() instanceof CustomUserDetails userDetails) {
             return userDetails.getUserInfo();
         }
         throw new UsernameNotFoundException("User not exists");
@@ -81,9 +81,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .build();
         userRepository.save(userInfo);
         VerificationToken verificationToken = verificationTokenService.createVerificationToken(userInfo);
-        executorService.execute(() -> mailService.sendMail(userInfo,verificationToken));
+        executorService.execute(() -> {
+            if (mailService.sendMail(userInfo, verificationToken)) {
+                verificationTokenService.saveVerificationToken(verificationToken);
+            }
+        });
     }
-
 
 
 }
