@@ -1,11 +1,11 @@
 package com.uptime.service.mail;
 
-import com.uptime.model.Activity;
-import com.uptime.model.UserInfo;
-import com.uptime.model.VerificationToken;
+import com.uptime.service.mail.factory.ContentFactory;
+
+import java.util.Map;
 
 public interface MailService {
 
-    boolean sendMail(UserInfo userInfo, VerificationToken verificationToken);
-    void sendAlertMail(Activity activity);
+    boolean sendMail(Map<String,Object> args, ContentFactory contentFactory);
+
 }

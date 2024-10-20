@@ -32,8 +32,9 @@ public class VerificationTokenService {
         return verificationToken;
     }
 
-    public void saveVerificationToken(VerificationToken token){
+    public boolean saveVerificationToken(VerificationToken token){
         verificationTokenRepository.save(token);
+        return true;
     }
 
     public void completeSignup(String token) {
