@@ -16,11 +16,14 @@ import java.util.UUID;
 @Service
 public class VerificationTokenService {
 
-    @Autowired
-    private VerificationTokenRepository verificationTokenRepository;
+    private final VerificationTokenRepository verificationTokenRepository;
 
-    @Autowired
-    UserInfoRepository userRepository;
+    private final UserInfoRepository userRepository;
+
+    public VerificationTokenService(VerificationTokenRepository verificationTokenRepository, UserInfoRepository userRepository) {
+        this.verificationTokenRepository = verificationTokenRepository;
+        this.userRepository = userRepository;
+    }
 
 
     public VerificationToken createVerificationToken(UserInfo userInfo) {
